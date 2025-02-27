@@ -5,6 +5,8 @@ import App from "./App";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import "./styles/index.css";
+import PrivateRoute from "./components/PrivateRoute";
+import Profile from "./pages/Profile";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -12,7 +14,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Login />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,21 +1,49 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { login } from "../services/auth";
 import bgImg from "../assets/loginBg.png";
 import logo from "../assets/logo 1.png";
 import { Form, Input, Button, Card, message } from "antd";
 
+
+interface LoginData {
+    username: string;
+    password: string;
+}
+
+
+interface ErrorResponse {
+    response?: {
+        status: number;
+    };
+}
+
 const Login = () => {
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate(); 
 
-    const handleLogin = async (values: { username: string; password: string }) => {
+    const handleLogin = async (values: LoginData) => {
         setLoading(true);
         try {
-            const data = await login(values);
-            console.log("Login successful:", data);
-            localStorage.setItem("token", data.token);
+            const loginResponse = await login(values);
+            console.log("Login successful:", loginResponse);
+
+            localStorage.setItem("token", loginResponse.access);
+            localStorage.setItem("refresh_token", loginResponse.refresh);
+            localStorage.setItem("user_id", loginResponse.user_id);
+            localStorage.setItem("user_role", loginResponse.user_role);
+
+
             message.success("Login successful!");
-        } catch (err) {
-            message.error("Login failed. Please check your credentials.");
+
+            navigate("/dashboard");
+        } catch (err: any) {
+            const error = err as ErrorResponse; 
+            if (error.response && error.response.status === 401) {
+                message.error("Incorrect username or password.");
+            } else {
+                message.error("An error occurred. Please try again later.");
+            }
         } finally {
             setLoading(false);
         }
@@ -26,10 +54,24 @@ const Login = () => {
             <Card className="w-96 shadow-2xs" title={<img src={logo} alt="Success Academy Logo" className="mx-auto w-[70%] mt-10" />}>
                 <h2 className="text-2xl text-[#334D6E] font-bold text-center">Welcome!</h2>
                 <Form layout="vertical" onFinish={handleLogin}>
-                    <Form.Item name="username" label="Username" rules={[{ required: true, message: "Please enter your username!" }]}>
+                    <Form.Item
+                        name="username"
+                        label="Username"
+                        rules={[
+                            { required: true, message: "Please enter your username!" },
+                            { min: 3, message: "Username must be at least 3 characters long!" }
+                        ]}
+                    >
                         <Input placeholder="Input Login" />
                     </Form.Item>
-                    <Form.Item name="password" label="Password" rules={[{ required: true, message: "Please enter your password!" }]}>
+                    <Form.Item
+                        name="password"
+                        label="Password"
+                        rules={[
+                            { required: true, message: "Please enter your password!" },
+                            { min: 6, message: "Password must be at least 6 characters long!" }
+                        ]}
+                    >
                         <Input.Password placeholder="Input Password" />
                     </Form.Item>
                     <div className="text-right mb-2">
