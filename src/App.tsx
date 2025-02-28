@@ -7,8 +7,8 @@ const App = () => {
 
   return (
     <>
-      {!isLoginPage && <Navbar/>} {/* Faqat login sahifasida Navbarni yashirish */}
-      <Outlet /> {/* Nested route-larni ko'rsatish uchun */}
+      {!isLoginPage && <Navbar/>} 
+      <Outlet /> 
     </>
   );
 };

@@ -23,13 +23,11 @@ interface LoginResponse {
 }
 
 
-// ✅ Login funksiyasi
 export const login = async (data: LoginData): Promise<LoginResponse> => {
     try {
         const response = await api.post<LoginResponse>("/api/v1/auth/login/", data);
         const { token, user } = response.data;
 
-        // Tokenni localStorage ga saqlash
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
 
@@ -47,21 +45,21 @@ export const login = async (data: LoginData): Promise<LoginResponse> => {
 //             try {
 //                 const token = localStorage.getItem("token");
 //                 if (!token) throw new Error("No token found");
-        
+
 //                 const response = await api.put<UserProfile>("/api/v1/user/me/", data, {
 //                     headers: { Authorization: `Bearer ${token}` },
 //                 });
-        
+
 //                 const updatedUser = response.data;
 //                 localStorage.setItem("user", JSON.stringify(updatedUser));
-        
+
 //                 return updatedUser;
 //             } catch (error: any) {
 //                 console.error("Error updating user:", error.response?.data || error.message);
 //                 throw new Error("Failed to update user profile");
 //             }
 //         };
-        
+
 //         await api.post("/api/v1/auth/logout/", null, {
 //             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 //         });
@@ -75,24 +73,23 @@ export const login = async (data: LoginData): Promise<LoginResponse> => {
 //     }
 // };
 
-// ✅ Foydalanuvchi ma'lumotlarini olish (API dan yoki localStorage'dan)
-export const getUser = async (): Promise<UserProfile | null> => {
-    try {
-        const token = localStorage.getItem("token");
-        if (!token) return null;
+// export const getUser = async (): Promise<UserProfile | null> => {
+//     try {
+//         const token = localStorage.getItem("token");
+//         if (!token) return null;
 
-        const response = await api.get<UserProfile>("/api/v1/user/me/", {
-            headers: { Authorization: `Bearer ${token}` },
-        });
+//         const response = await api.get<UserProfile>("/api/v1/user/me/", {
+//             headers: { Authorization: `Bearer ${token}` },
+//         });
 
-        const user = response.data;
-        localStorage.setItem("user", JSON.stringify(user));
-        return user;
-    } catch (error: any) {
-        console.error("Error fetching user:", error.response?.data || error.message);
-        return null;
-    }
-};
+//         const user = response.data;
+//         localStorage.setItem("user", JSON.stringify(user));
+//         return user;
+//     } catch (error: any) {
+//         console.error("Error fetching user:", error.response?.data || error.message);
+//         return null;
+//     }
+// };
 
 
 
@@ -115,3 +112,102 @@ export const updateUser = async (data: UserProfile): Promise<UserProfile> => {
         throw new Error("Failed to update user profile");
     }
 };
+
+
+
+
+
+// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+// interface LoginData {
+//     username: string;
+//     password: string;
+// }
+
+// interface UserProfile {
+//     firstName: string;
+//     lastName: string;
+//     avatar: string;
+// }
+
+// interface LoginResponse {
+//     token: string;
+//     user: UserProfile;
+//     access: string;
+//     refresh: string;
+//     user_id: string;
+//     user_role: string;
+// }
+
+// export const authApi = createApi({
+//     reducerPath: "authApi",
+//     baseQuery: fetchBaseQuery({
+//         baseUrl: "https://your-api.com/api/v1",
+//         prepareHeaders: (headers) => {
+//             const token = localStorage.getItem("token");
+//             if (token) headers.set("Authorization", `Bearer ${token}`);
+//             return headers;
+//         },
+//     }),
+//     endpoints: (builder) => ({
+//         login: builder.mutation<LoginResponse, LoginData>({
+//             query: (data) => ({
+//                 url: "/auth/login/",
+//                 method: "POST",
+//                 body: data,
+//             }),
+//             async onQueryStarted(_arg, { queryFulfilled }) {
+//                 try {
+//                     const { data } = await queryFulfilled;
+//                     localStorage.setItem("token", data.token);
+//                     localStorage.setItem("user", JSON.stringify(data.user));
+//                 } catch (error) {
+//                     console.error("Login error:", error);
+//                 }
+//             },
+//         }),
+
+//         logout: builder.mutation<void, void>({
+//             query: () => ({
+//                 url: "/auth/logout/",
+//                 method: "POST",
+//             }),
+//             async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+//                 try {
+//                     await queryFulfilled;
+//                     localStorage.removeItem("token");
+//                     localStorage.removeItem("user");
+//                     dispatch(authApi.util.resetApiState());
+//                 } catch (error) {
+//                     console.error("Logout error:", error);
+//                 }
+//             },
+//         }),
+
+//         getUser: builder.query<UserProfile, void>({
+//             query: () => "/user/me/",
+//             transformResponse: (response: UserProfile) => {
+//                 localStorage.setItem("user", JSON.stringify(response));
+//                 return response;
+//             },
+//         }),
+
+//         updateUser: builder.mutation<UserProfile, UserProfile>({
+//             query: (data) => ({
+//                 url: "/user/me/",
+//                 method: "PUT",
+//                 body: data,
+//             }),
+//             async onQueryStarted(_arg, { queryFulfilled }) {
+//                 try {
+//                     const { data } = await queryFulfilled;
+//                     localStorage.setItem("user", JSON.stringify(data));
+//                 } catch (error) {
+//                     console.error("Update error:", error);
+//                 }
+//             },
+//         }),
+//     }),
+// });
+
+// export const { useLoginMutation, useLogoutMutation, useGetUserQuery, useUpdateUserMutation } = authApi;
