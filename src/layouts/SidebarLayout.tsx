@@ -1,14 +1,10 @@
 import { Layout, Menu } from "antd";
-import { ReactNode, useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { FaChartPie, FaUserGraduate, FaUsers, FaLayerGroup, FaMoneyBillWave, FaCog, FaBuilding, FaChevronDown } from "react-icons/fa";
-// import { AiOutlineHome, AiOutlineUser } from "react-icons/ai";
+import { SidebarProps } from "../types/SidebarLayout";
 
 const { Sider, Content } = Layout;
-
-interface SidebarProps {
-    children: ReactNode;
-}
 
 const menuItems = [
     { key: "dashboard", icon: <FaChartPie />, label: "Dashboard" },
@@ -22,6 +18,7 @@ const menuItems = [
 export default function SidebarLayout({ children }: SidebarProps) {
     const [collapsed, setCollapsed] = useState(false);
     const [isMainBranchOpen, setIsMainBranchOpen] = useState(false);
+    const location = useLocation(); // 📌 Hozirgi sahifa yo‘lini olish
 
     return (
         <Layout className="h-screen flex !bg-white">
@@ -41,7 +38,7 @@ export default function SidebarLayout({ children }: SidebarProps) {
                         <h2 className="text-base font-semibold text-black">Main branch</h2>
                         <p className="text-sm text-gray-500">Nukus city</p>
                     </div>
-                    {/* Chevron icon with white background */}
+                    {/* Chevron icon */}
                     <div
                         onClick={() => setIsMainBranchOpen(!isMainBranchOpen)}
                         className="ml-auto cursor-pointer bg-white p-2 rounded-full"
@@ -52,26 +49,22 @@ export default function SidebarLayout({ children }: SidebarProps) {
                     </div>
                 </div>
 
+                {/* Filial menyusi */}
                 {isMainBranchOpen && (
                     <div className="px-4 py-3 bg-gray-100 rounded-md mt-3">
-                        <p className="text-sm text-gray-700 font-medium cursor-pointer hover:bg-gray-200 hover:text-blue-600 py-2 px-3 rounded-lg transition-all">
-                            <FaBuilding className="inline mr-2 text-blue-500" />
-                            Branch 1
-                        </p>
-                        <p className="text-sm text-gray-700 font-medium cursor-pointer hover:bg-gray-200 hover:text-blue-600 py-2 px-3 rounded-lg transition-all mt-2">
-                            <FaBuilding className="inline mr-2 text-blue-500" />
-                            Branch 2
-                        </p>
-                        <p className="text-sm text-gray-700 font-medium cursor-pointer hover:bg-gray-200 hover:text-blue-600 py-2 px-3 rounded-lg transition-all mt-2">
-                            <FaBuilding className="inline mr-2 text-blue-500" />
-                            Branch 3
-                        </p>
+                        {["Branch 1", "Branch 2", "Branch 3"].map((branch, index) => (
+                            <p key={index} className="text-sm text-gray-700 font-medium cursor-pointer hover:bg-gray-200 hover:text-blue-600 py-2 px-3 rounded-lg transition-all">
+                                <FaBuilding className="inline mr-2 text-blue-500" />
+                                {branch}
+                            </p>
+                        ))}
                     </div>
                 )}
 
+                {/* Asosiy menyu */}
                 <Menu
                     mode="inline"
-                    defaultSelectedKeys={["dashboard"]}
+                    selectedKeys={[location.pathname.replace("/", "") || "dashboard"]} // 📌 Hozirgi sahifani `active` qilish
                     items={menuItems.map((item) => ({
                         key: item.key,
                         icon: item.icon,
@@ -87,4 +80,3 @@ export default function SidebarLayout({ children }: SidebarProps) {
         </Layout>
     );
 }
-

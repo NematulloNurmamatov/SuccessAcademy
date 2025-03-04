@@ -4,19 +4,9 @@ import { login } from "../services/auth";
 import bgImg from "../assets/loginBg.png";
 import logo from "../assets/logo 1.png";
 import { Form, Input, Button, Card, message } from "antd";
+import { ErrorResponse, LoginData } from "../types/Login";
 
 
-interface LoginData {
-    username: string;
-    password: string;
-}
-
-
-interface ErrorResponse {
-    response?: {
-        status: number;
-    };
-}
 
 const Login = () => {
     const [loading, setLoading] = useState(false);

@@ -1,11 +1,12 @@
-import { Layout, Avatar, Dropdown, MenuProps, message } from "antd";
-import { FaBell } from "react-icons/fa";
+import { Layout, Avatar, Dropdown, MenuProps, message, Input } from "antd";
+import { FaBell, FaSearch } from "react-icons/fa";
 import img from "../assets/Layer_40_copy.png";
 import { useNavigate } from "react-router-dom";
 // import { useSelector } from "react-redux";
 // import { RootState } from "../store/store";
 import { useGetUserQuery } from "../services/Service";
 import { ThreeDot } from "react-loading-indicators";
+import { SearchOutlined } from "@ant-design/icons";
 
 const { Header } = Layout;
 
@@ -40,10 +41,16 @@ export default function Navbar() {
                 </div>
 
                 <div className="relative w-72">
-                    <input
-                        type="text"
+                    {/* Search ikonkasi */}
+                    <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+
+                    {/* Input */}
+                    <Input
                         placeholder="Search..."
-                        className="w-full h-10 pl-10 pr-4 border rounded-lg focus:outline-none border-gray-300 p-2 bg-gray-100 focus:ring-2 focus:ring-blue-500"
+                        allowClear
+                        size="large"
+                        prefix={<SearchOutlined className="text-gray-400" />}
+                        className="w-72"
                     />
                 </div>
 

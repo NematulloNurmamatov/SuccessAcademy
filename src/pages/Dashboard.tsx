@@ -7,35 +7,9 @@ import a from "../assets/Ellipse 16.png";
 import b from "../assets/Ellipse 16 (1).png";
 import c from "../assets/Ellipse 16 (2).png";
 import d from "../assets/Ellipse 16 (3).png";
+import { barData, data, pieData, stats } from "../utils/Sidebar";
 
 const { Content } = Layout;
-
-// Pie chart uchun data
-const pieData = [
-    { name: "Paid", value: 60, color: "#1677FF" },
-    { name: "Not Paid", value: 40, color: "#D9E8FF" },
-];
-
-// Bar chart uchun data
-const barData = [
-    { month: "JAN", value: 10 },
-    { month: "FEB", value: 20 },
-    { month: "MAR", value: 30 },
-    { month: "APR", value: 25 },
-    { month: "MAY", value: 35 },
-    { month: "JUN", value: 50 },
-    { month: "JUL", value: 30 },
-    { month: "AUG", value: 40 },
-];
-
-// Statistika data
-const stats = [
-    { percent: 67, amount: "255,000,000", color: "#ff4d4f" },
-    { percent: 35, amount: "218,000,000", color: "#52c41a" },
-    { percent: 21, amount: "156,000,000", color: "#fa8c16" },
-];
-
-// Table ustunlari
 
 const columns = [
     { title: "#", dataIndex: "id", key: "id" },
@@ -45,8 +19,8 @@ const columns = [
         key: "time",
         render: (text: string) => {
             return (
-                <Tag color={text && text.includes("09:00") ? "red" : "blue"}>
-                    <FaClock className="mr-1" /> {text}
+                <Tag color={text && text.includes("09:00") ? "red" : "blue"} >
+                    <h1 className="flex items-center gap-1 py-2"><FaClock className="mr-1" /> {text}</h1>
                 </Tag>
             )
         },
@@ -61,30 +35,7 @@ const columns = [
 
 
 // Table ma'lumotlari
-const data = [
-    {
-        id: 1,
-        key: 1,
-        time: "09:00 - 10:00",
-        name: "Group 52",
-        teacher: "Mr. Johnson",
-        subject: "English",
-        lessonType: "Group",
-        room: "Room 2-3",
-        students: "18 students",
-    },
-    {
-        id: 2,
-        key: 2,
-        time: "10:00 - 11:00",
-        name: "Steve Hoover",
-        teacher: "Mr. Johnson",
-        subject: "English",
-        lessonType: "Individual",
-        room: "Room 2-3",
-        students: "1 student",
-    },
-];
+
 
 
 export default function Dashboard() {
@@ -96,10 +47,10 @@ export default function Dashboard() {
                         {[a, b, c, d].map((img, index) => (
                             <div
                                 key={index}
-                                className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:scale-103 transform transition-all duration-300 cursor-pointer flex items-center gap-4 hover:bg-gradient-to-r hover:from-blue-300 hover:to-teal-200 hover:!text-white"
+                                className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:scale-103 transform transition-all duration-300 cursor-pointer flex items-center gap-4 hover:bg-gradient-to-r hover:from-blue-300 hover:to-teal-200 hover:text-white group"
                             >
                                 <img className="w-full max-w-[60px]" src={img} alt="" />
-                                <p className="text-[#334D6E] text-lg font-bold">45 New Leads</p>
+                                <p className="text-[#334D6E] text-lg font-bold group-hover:text-white">45 New Leads</p>
                             </div>
                         ))}
                     </div>
@@ -108,7 +59,7 @@ export default function Dashboard() {
                         <div className="bg-white p-6 rounded-lg shadow-md col-span-4">
                             <h3 className="text-lg font-semibold text-gray-700 mb-4">Payment Status</h3>
                             <PieChart width={200} height={200} className="mx-auto">
-                                <Pie data={pieData} dataKey="value" cx="50%" cy="50%" innerRadius={60} outerRadius={80} stroke="none">
+                                <Pie data={pieData} dataKey="value" cx="50%" cy="50%" innerRadius={60} outerRadius={80} stroke="none" style={{outline:"none"}}>
                                     {pieData.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={entry.color} />
                                     ))}

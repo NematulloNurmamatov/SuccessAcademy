@@ -1,7 +1,5 @@
 import api from "./api";
 
-// Login va foydalanuvchi interfeyslari
-
 interface LoginData {
     username: string;
     password: string;
@@ -23,6 +21,7 @@ interface LoginResponse {
 }
 
 
+
 export const login = async (data: LoginData): Promise<LoginResponse> => {
     try {
         const response = await api.post<LoginResponse>("/api/v1/auth/login/", data);
@@ -38,80 +37,28 @@ export const login = async (data: LoginData): Promise<LoginResponse> => {
     }
 };
 
-// ✅ Logout funksiyasi
-// export const logout = async () => {
-//     try {// ✅ Foydalanuvchi profilini yangilash funksiyasi
-//         export const updateUser = async (data: UserProfile): Promise<UserProfile> => {
-//             try {
-//                 const token = localStorage.getItem("token");
-//                 if (!token) throw new Error("No token found");
-
-//                 const response = await api.put<UserProfile>("/api/v1/user/me/", data, {
-//                     headers: { Authorization: `Bearer ${token}` },
-//                 });
-
-//                 const updatedUser = response.data;
-//                 localStorage.setItem("user", JSON.stringify(updatedUser));
-
-//                 return updatedUser;
-//             } catch (error: any) {
-//                 console.error("Error updating user:", error.response?.data || error.message);
-//                 throw new Error("Failed to update user profile");
-//             }
-//         };
-
-//         await api.post("/api/v1/auth/logout/", null, {
-//             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-//         });
-
-//         // Token va foydalanuvchi ma'lumotlarini o‘chirish
-//         localStorage.removeItem("token");
-//         localStorage.removeItem("user");
-//     } catch (error: any) {
-//         console.error("Logout error:", error.response?.data || error.message);
-//         throw new Error("Logout failed");
-//     }
-// };
-
-// export const getUser = async (): Promise<UserProfile | null> => {
-//     try {
-//         const token = localStorage.getItem("token");
-//         if (!token) return null;
-
-//         const response = await api.get<UserProfile>("/api/v1/user/me/", {
-//             headers: { Authorization: `Bearer ${token}` },
-//         });
-
-//         const user = response.data;
-//         localStorage.setItem("user", JSON.stringify(user));
-//         return user;
-//     } catch (error: any) {
-//         console.error("Error fetching user:", error.response?.data || error.message);
-//         return null;
-//     }
-// };
 
 
 
 // ✅ Foydalanuvchi profilini yangilash funksiyasi
-export const updateUser = async (data: UserProfile): Promise<UserProfile> => {
-    try {
-        const token = localStorage.getItem("token");
-        if (!token) throw new Error("No token found");
+// export const updateUser = async (data: UserProfile): Promise<UserProfile> => {
+//     try {
+//         const token = localStorage.getItem("token");
+//         if (!token) throw new Error("No token found");
 
-        const response = await api.put<UserProfile>("/api/v1/user/me/", data, {
-            headers: { Authorization: `Bearer ${token}` },
-        });
+//         const response = await api.put<UserProfile>("/api/v1/user/me/", data, {
+//             headers: { Authorization: `Bearer ${token}` },
+//         });
 
-        const updatedUser = response.data;
-        localStorage.setItem("user", JSON.stringify(updatedUser));
+//         const updatedUser = response.data;
+//         localStorage.setItem("user", JSON.stringify(updatedUser));
 
-        return updatedUser;
-    } catch (error: any) {
-        console.error("Error updating user:", error.response?.data || error.message);
-        throw new Error("Failed to update user profile");
-    }
-};
+//         return updatedUser;
+//     } catch (error: any) {
+//         console.error("Error updating user:", error.response?.data || error.message);
+//         throw new Error("Failed to update user profile");
+//     }
+// };
 
 
 

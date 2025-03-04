@@ -13,25 +13,84 @@ export const ApiClient = createApi({
         },
     }),
     endpoints: (builder) => ({
+        Login: builder.mutation({
+            query: (data) => ({
+                url: "auth/login/",
+                method: "POST",
+                body: data,
+            }),
+        }),
+
         GetUser: builder.query({
             query: () => ({
                 url: "/api/v1/user/me/",
             }),
         }),
+
+        GetSubject: builder.query({
+            query: () => ({
+                url: "/api/v1/course/subject-select",
+                method: "GET",
+            }),
+        }),
+
+        GetTeacher: builder.query({
+            query: () => ({
+                url: "/api/v1/employee/select-list",
+                method: "GET",
+            }),
+        }),
+
         UpdateUser: builder.mutation({
             query: (data) => ({
-                url: "/api/v1/user/me/",
+                url: "/api/v1/user/me/", 
                 method: "PUT",
                 body: data,
             }),
         }),
+
+        UpdateLead: builder.mutation({
+            query: ({ id, ...data }) => ({
+                url: `/api/v1/lead/${id}/`,
+                method: "PUT",
+                body: data,
+            }),
+        }),
+        
+
         LeadList: builder.query({
             query: () => ({
                 url: "/api/v1/lead/list/",
             }),
-        })
+        }),
+
+        LeadCreate: builder.mutation({
+            query: (data) => ({
+
+                url: "/api/v1/lead/create/",
+                method: "POST",
+                body: {
+                    first_name: data.first_name || "No'malum", 
+                    last_name: data.last_name || "No'malum",   
+                    phone: data.phone,
+                    teacher: data.teacher,
+                    note: data.note || "No'malum",
+                    lesson_type: data.lessonType,
+                    source: data.source,
+                    lesson_time: data.lessonTime || null,
+                },
+            }),
+        }),
     }),
 });
 
-// Hooklarni eksport qilish
-export const { useGetUserQuery, useUpdateUserMutation, useLeadListQuery } = ApiClient;
+export const {
+    useLoginMutation,
+    useGetUserQuery,
+    useUpdateUserMutation,
+    useLeadListQuery,
+    useLeadCreateMutation,
+    useGetSubjectQuery,
+    useGetTeacherQuery,
+    useUpdateLeadMutation
+} = ApiClient;
