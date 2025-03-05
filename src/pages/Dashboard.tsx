@@ -47,7 +47,7 @@ export default function Dashboard() {
                         {[a, b, c, d].map((img, index) => (
                             <div
                                 key={index}
-                                className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:scale-103 transform transition-all duration-300 cursor-pointer flex items-center gap-4 hover:bg-gradient-to-r hover:from-blue-300 hover:to-teal-200 hover:text-white group"
+                                className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:scale-101 transform transition-all duration-300 cursor-pointer flex items-center gap-4 hover:bg-gradient-to-r hover:from-blue-300 hover:to-teal-400 hover:text-white group"
                             >
                                 <img className="w-full max-w-[60px]" src={img} alt="" />
                                 <p className="text-[#334D6E] text-lg font-bold group-hover:text-white">45 New Leads</p>

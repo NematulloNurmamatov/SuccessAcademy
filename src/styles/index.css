@@ -9,3 +9,17 @@
     max-width: 1320px;
     margin: auto;
 }
+
+.ant-form-item-label {
+    padding-bottom: 1px !important;
+}
+
+.ant-layout-sider-trigger {
+    background: rgb(239, 239, 239) !important;
+    border: 1px solid rgb(199, 199, 199) !important;
+    border-radius: 4px !important;
+}
+
+.anticon {
+    color: black !important;
+}

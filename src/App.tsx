@@ -1,15 +1,27 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 
 const App = () => {
   const location = useLocation();
-  const isLoginPage = location.pathname === "/";
+  const navigate = useNavigate();
+  const isLoginPage = location.pathname === "/login";
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login", { replace: true }); 
+    } else {
+      navigate("/dashboard", { replace: true }); 
+    }
+  }, []);
 
   return (
-    <>
-      {!isLoginPage && <Navbar/>} 
-      <Outlet /> 
-    </>
+    <div>
+      {!isLoginPage && <Navbar />} 
+      <Outlet />
+    </div>
   );
 };
 

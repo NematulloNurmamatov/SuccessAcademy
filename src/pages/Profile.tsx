@@ -14,6 +14,7 @@ export default function ProfilePage() {
         first_name: "",
         last_name: "",
         profile_photo: "",
+        phone_number_1: "",
     });
 
     useEffect(() => {
@@ -22,6 +23,7 @@ export default function ProfilePage() {
                 first_name: data.first_name || "",
                 last_name: data.last_name || "",
                 profile_photo: data.profile_photo || "",
+                phone_number_1: data.phone_number_1 || "",
             });
         }
     }, [data]);
@@ -30,6 +32,14 @@ export default function ProfilePage() {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleTelChange = (e: any) => {
+        const formattedTel = e.target.value;
+        setFormData({
+            ...formData,
+            phone_number_1: formattedTel, 
         });
     };
 
@@ -51,6 +61,7 @@ export default function ProfilePage() {
             const updatedData = new FormData();
             updatedData.append("first_name", formData.first_name);
             updatedData.append("last_name", formData.last_name);
+            updatedData.append("phone_number_1", formData.phone_number_1);
             if (selectedFile) {
                 updatedData.append("profile_photo", selectedFile);
             }
@@ -61,7 +72,8 @@ export default function ProfilePage() {
             setFormData({
                 first_name: response.first_name,
                 last_name: response.last_name,
-                profile_photo: response.profile_photo, 
+                profile_photo: response.profile_photo,
+                phone_number_1: response.phone_number_1
             });
 
             message.success("Profile updated successfully!");
@@ -83,11 +95,11 @@ export default function ProfilePage() {
         <div className="fullContainer">
             <SidebarLayout>
                 <div className="p-6 bg-white rounded-lg shadow-md w-full max-w-lg mx-auto">
-                    <h1 className="text-2xl font-semibold mb-4">Profile Page</h1>
+                    <h1 className="text-[12px] text-[#192A3E] font-semibold mb-4">Profile</h1>
                     <form onSubmit={handleSubmit}>
                         {
                             formData.profile_photo && (
-                                <div className="mb-4">
+                                <div className="mb-4 flex justify-center">
                                     <img
                                         src={selectedFile ? URL.createObjectURL(selectedFile) : `${formData.profile_photo}?t=${new Date().getTime()}`}
                                         alt="Profile"
@@ -96,8 +108,19 @@ export default function ProfilePage() {
                                 </div>
                             )
                         }
+
                         <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700">First Name</label>
+                            <label className="block text-[11px] font-medium text-[#334D6E]">Profile Picture</label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                className="mt-1 block w-full p-2 border border-dashed border-gray-600 rounded-md outline-0"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block text-[11px] font-medium text-[#334D6E]">First Name</label>
                             <input
                                 type="text"
                                 name="first_name"
@@ -109,7 +132,7 @@ export default function ProfilePage() {
                         </div>
 
                         <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                            <label className="block text-[11px] font-medium text-[#334D6E]">Last Name</label>
                             <input
                                 type="text"
                                 name="last_name"
@@ -121,12 +144,14 @@ export default function ProfilePage() {
                         </div>
 
                         <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700">Profile Picture</label>
+                            <label className="block text-[11px] font-medium text-[#334D6E]">Phone Number</label>
                             <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleFileChange}
+                                type="text"
+                                name="last_name"
+                                value={formData.phone_number_1}
+                                onChange={handleTelChange}
                                 className="mt-1 block w-full p-2 border border-gray-600 rounded-md outline-0"
+                                required
                             />
                         </div>
 
@@ -140,6 +165,7 @@ export default function ProfilePage() {
                                         first_name: data?.first_name || "",
                                         last_name: data?.last_name || "",
                                         profile_photo: data?.profile_photo || "",
+                                        phone_number_1: data?.phone_number || 0,
                                     })
                                 }
                             >

@@ -20,8 +20,13 @@ export default function Navbar() {
     const handleLogout = async () => {
         try {
             localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            localStorage.removeItem("refresh_token");
+            localStorage.removeItem("user_id");
+            localStorage.removeItem("user_role");
+
             message.success("You have logged out successfully!");
-            navigate("/");
+            navigate("/login");
         } catch (error) {
             message.error("Logout failed. Please try again later.");
         }
@@ -59,7 +64,7 @@ export default function Navbar() {
                     {isLoading ? (
                         <span><ThreeDot color="#4e31cc" size="small" text="" textColor="" /> </span>
                     ) : (
-                        data && (
+                        data ? (
                             <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
                                 <div className="flex items-end mt-[-20px] cursor-pointer">
                                     <Avatar src={data.profile_photo} size="large">
@@ -75,9 +80,18 @@ export default function Navbar() {
                                     </div>
                                 </div>
                             </Dropdown>
+                        ) : (
+                            <span className="flex mt-[0px] items-center gap-2 text-gray-500">
+                                <Avatar size="large">N</Avatar>
+                                <div className="mt-[-20px]">
+                                    <div className="font-medium text-gray-600">Noma'lum</div>
+                                    <p className="text-sm text-gray-500 mt-[-23px]">Rol mavjud emas</p>
+                                </div>
+                            </span>
                         )
                     )}
                 </div>
+
             </div>
         </Header>
     );

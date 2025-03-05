@@ -98,11 +98,12 @@ export default function LeadColumn({ title, leads, refetch }: LeadColumnProps) {
             {/* Edit Modal */}
             {isModalOpen && selectedLead && (
                 <Modal
-                    title="Edit Lead"
                     open={isModalOpen}
                     onCancel={closeModal}
                     footer={null}
                 >
+                    <p className="text-center !text-[25px] text-[#334D6E]">Lead card</p>
+                    <p className="text-center !text-[14px] text-[#334D6E] mb-4">Are you sure you want to edit the lead card?</p>
                     <Form layout="vertical" onFinish={handleSave} initialValues={{
                         first_name: selectedLead.first_name,
                         last_name: selectedLead.last_name,
@@ -114,35 +115,56 @@ export default function LeadColumn({ title, leads, refetch }: LeadColumnProps) {
                     }}>
                         <div className=" ">
                             <div className="grid grid-cols-2 gap-x-4">
-                                <Form.Item name="first_name" label="First Name" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="first_name"
+                                    label={<span className="text-[#334D6E] text-[11px]">First Name</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Input
                                         value={selectedLead.first_name}
                                         onChange={(e) => setSelectedLead({ ...selectedLead, first_name: e.target.value })}
                                     />
                                 </Form.Item>
-                                <Form.Item name="last_name" label="Last Name" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="last_name"
+                                    label={<span className="text-[#334D6E] text-[11px]">Last Name</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Input
                                         value={selectedLead.last_name}
                                         onChange={(e) => setSelectedLead({ ...selectedLead, last_name: e.target.value })}
                                     />
                                 </Form.Item>
-                                <Form.Item name="phone" label="Phone Number" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="phone"
+                                    label={<span className="text-[#334D6E] text-[11px]">Phone Number</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Input
                                         value={selectedLead.phone}
                                         onChange={(e) => setSelectedLead({ ...selectedLead, phone: e.target.value })}
                                     />
                                 </Form.Item>
-                                <Form.Item name="lesson_type" label="Lesson Type" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="lesson_type"
+                                    label={<span className="text-[#334D6E] text-[11px]">Lesson Type</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Select
                                         value={selectedLead.lesson_type}
                                         onChange={(value) => setSelectedLead({ ...selectedLead, lesson_type: value })}
                                     >
                                         <Select.Option value="group">Group</Select.Option>
-                                        <Select.Option value="individual">individual</Select.Option>
+                                        <Select.Option value="individual">Individual</Select.Option>
                                     </Select>
                                 </Form.Item>
 
-                                <Form.Item className="col-span-2" name="status" label="Status" rules={[{ required: true }]}>
+                                <Form.Item
+                                    className="col-span-2"
+                                    name="status"
+                                    label={<span className="text-[#334D6E] text-[11px]">Status</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Select
                                         value={selectedLead.status}
                                         onChange={(value) => {
@@ -160,7 +182,11 @@ export default function LeadColumn({ title, leads, refetch }: LeadColumnProps) {
                                         ))}
                                     </Select>
                                 </Form.Item>
-                                <Form.Item name="source" label="Source" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="source"
+                                    label={<span className="text-[#334D6E] text-[11px]">Source</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Select
                                         value={selectedLead?.source}
                                         onChange={(value) => setSelectedLead({ ...selectedLead, source: value })}
@@ -181,7 +207,11 @@ export default function LeadColumn({ title, leads, refetch }: LeadColumnProps) {
                                     </Select>
                                 </Form.Item>
 
-                                <Form.Item name="lesson_time" label="Lesson Time" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="lesson_time"
+                                    label={<span className="text-[#334D6E] text-[11px]">Lesson Time</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Select
                                         value={selectedLead?.lesson_time}
                                         onChange={(value) => setSelectedLead({ ...selectedLead, lesson_time: value })}
@@ -193,9 +223,9 @@ export default function LeadColumn({ title, leads, refetch }: LeadColumnProps) {
                                         ))}
                                     </Select>
                                 </Form.Item>
-
                             </div>
                         </div>
+
                         <Form.Item className="flex justify-end">
                             <Button onClick={closeModal} className="mr-2">Cancel</Button>
                             <Button type="primary" htmlType="submit" loading={loading}>

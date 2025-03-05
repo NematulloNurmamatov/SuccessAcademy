@@ -51,7 +51,7 @@ export default function Leads() {
 
     const showModal = () => {
         setIsModalOpen(true);
-        
+
     };
 
     const handleCancel = () => setIsModalOpen(false);
@@ -98,21 +98,34 @@ export default function Leads() {
 
                 {/* Modal */}
                 <Modal
-                    title="Create New Lead"
                     open={isModalOpen}
                     onCancel={handleCancel}
                     footer={null}
                 >
+                    <p className="text-center !text-[25px] text-[#334D6E]">Add new lead</p>
+                    <p className="text-center !text-[14px] text-[#334D6E] mb-4">By creating a new lead, you will also be adding a new customer to customer base</p>
                     <Form form={form} layout="vertical" onFinish={handleCreateLead}>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5">
                             <div>
-                                <Form.Item name="first_name" label="First Name" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="first_name"
+                                    label={<span className="text-[#334D6E] text-[11px]">First Name</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Input />
                                 </Form.Item>
-                                <Form.Item name="phone" label="Phone Number" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="phone"
+                                    label={<span className="text-[#334D6E] text-[11px]">Phone Number</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Input />
                                 </Form.Item>
-                                <Form.Item name="teacher" label="Teacher" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="teacher"
+                                    label={<span className="text-[#334D6E] text-[11px]">Teacher</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Select>
                                         {teachers.map((teacher: Teacher) => (
                                             <Select.Option key={teacher.id} value={teacher.id}>{teacher.teacher_name}</Select.Option>
@@ -121,10 +134,18 @@ export default function Leads() {
                                 </Form.Item>
                             </div>
                             <div>
-                                <Form.Item name="last_name" label="Last Name" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="last_name"
+                                    label={<span className="text-[#334D6E] text-[11px]">Last Name</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Input />
                                 </Form.Item>
-                                <Form.Item name="subject" label="Subject" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="subject"
+                                    label={<span className="text-[#334D6E] text-[11px]">Subject</span>}
+                                    rules={[{ required: true }]}
+                                >
                                     <Select>
                                         {subjects.map((subject: Subject) => (
                                             <Select.Option key={subject.id} value={subject.id}>{subject.name}</Select.Option>
@@ -133,6 +154,7 @@ export default function Leads() {
                                 </Form.Item>
                             </div>
                         </div>
+
                         <Form.Item className="flex justify-end">
                             <Button type="primary" htmlType="submit" loading={isCreating}>
                                 Save Lead

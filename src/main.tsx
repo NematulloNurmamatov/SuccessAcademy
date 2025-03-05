@@ -14,21 +14,20 @@ import Leads from "./pages/Leads";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
+    <Provider store={store}>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route index element={<Login />} />
+            <Route path="login" element={<Login />} />
             <Route element={<PrivateRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/leads" element={<Leads />} />
-              
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="leads" element={<Leads />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>
           </Route>
         </Routes>
-      </Provider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
