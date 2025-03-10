@@ -128,7 +128,6 @@ export default function Clients() {
         console.log(values);
 
 
-
         try {
             const response = await createStudent(payload).unwrap();
             console.log("Serverdan qaytgan ma’lumot:", response);

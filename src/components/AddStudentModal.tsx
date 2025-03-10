@@ -241,9 +241,6 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ visible, onClose, onS
                             </Form.Item>
 
 
-
-
-
                             <Form.Item label="Monthly Discount" name="monthly_discount">
                                 <InputNumber min={0} max={1000000} defaultValue={0} className="!w-full" />
                             </Form.Item>
