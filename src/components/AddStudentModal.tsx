@@ -18,6 +18,8 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ visible, onClose, onS
     // const [selectedGroup, setSelectedGroup] = useState(null);
     const [search, setSearch] = useState("");
 
+    const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
+
     const columns = [
         {
             title: "Group Name",
@@ -35,6 +37,8 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ visible, onClose, onS
             key: "start_date",
         },
     ];
+
+
 
 
     const [step, setStep] = useState(1);
@@ -57,6 +61,13 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ visible, onClose, onS
     const employees: Employee[] = employeeData || [];
     const startTimes: StartTime[] = startTimeData || [];
     const groups: Group[] = groupData || [];
+
+    const handleSelectGroup = (groupId: number) => {
+        setSelectedGroup(groupId);
+        form.setFieldsValue({ group_id: groupId }); // Formani yangilash
+        console.log("Tanlangan group_id:", groupId);
+    };
+
 
 
 
@@ -85,8 +96,8 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ visible, onClose, onS
             open={visible}
             onCancel={handleCancel}
             footer={null}
-            width={600} // Modalning enini belgilash (o'zingiz xohlagan qiymat)
-            className="max-h-[70vh] overflow-y-auto [&::-webkit-scrollbar]:hidden"
+            width={550}
+            className="max-h-[70vh] rounded-md overflow-y-auto [&::-webkit-scrollbar]:hidden"
 
         >
             <div className="overflow-hidden">
@@ -203,6 +214,7 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ visible, onClose, onS
                                 onChange={(e) => setSearch(e.target.value)}
                                 className="mb-2 col-span-2"
                             />
+
                             <Table
                                 columns={columns}
                                 dataSource={groups.filter(group =>
@@ -213,7 +225,21 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ visible, onClose, onS
                                 scroll={{ y: 300 }}
                                 bordered
                                 className="col-span-2"
+                                rowClassName={(record) =>
+                                    selectedGroup === record.id ? "bg-blue-200 border border-blue-500" : ""
+                                }
+                                onRow={(record) => ({
+                                    onClick: () => handleSelectGroup(record.id),
+                                    style: {
+                                        cursor: "pointer",
+                                    },
+                                })}
                             />
+
+                            <Form.Item name="group_id" hidden>
+                                <Input />
+                            </Form.Item>
+
 
 
 

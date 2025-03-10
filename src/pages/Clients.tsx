@@ -121,7 +121,7 @@ export default function Clients() {
             teacher: values.teacher || null,
             monthly_discount: values.monthly_discount ?? 1000,
             first_month_discount: values.monthly_discount ?? 1000,
-            group_id: values.group_id || 3,
+            group_id: values.group_id,
             calculation_type: values.calculation_type || 1,
         };
 
