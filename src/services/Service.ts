@@ -41,9 +41,46 @@ export const ApiClient = createApi({
             }),
         }),
 
+        GetClientList: builder.query({
+            query: ({ page, size }) => ({
+                url: `/api/v1/student/list/?page=${page}&size=${size}`,
+                method: "GET",
+            }),
+        }),
+
+
+        getBranches: builder.query({
+            query: () => "/api/v1/branch/",
+        }),
+
+        getSubjects: builder.query({
+            query: (branchId) => `/api/v1/course/subject-select?branch=${branchId}`,
+        }),
+
+
+        getCourseLevels: builder.query({
+            query: (subjectId) => `/api/v1/course/${subjectId}/level`,
+        }),
+        getEmployees: builder.query({
+            query: (branchId) => `/api/v1/employee/select-list?branch=${branchId}`,
+        }),
+
+
+        getStartTimes: builder.query({
+            query: () => `/api/v1/group/start-times`,
+        }),
+        getGroups: builder.query({
+            query: () => `/api/v1/group/group-select`,
+        }),
+
+        getClientById: builder.query({
+            query: (id) => `/api/v1/student/profile/${id}/`,
+        }),
+
+
         UpdateUser: builder.mutation({
             query: (data) => ({
-                url: "/api/v1/user/me/", 
+                url: "/api/v1/user/me/",
                 method: "PUT",
                 body: data,
             }),
@@ -56,7 +93,7 @@ export const ApiClient = createApi({
                 body: data,
             }),
         }),
-        
+
 
         LeadList: builder.query({
             query: () => ({
@@ -70,8 +107,8 @@ export const ApiClient = createApi({
                 url: "/api/v1/lead/create/",
                 method: "POST",
                 body: {
-                    first_name: data.first_name || "No'malum", 
-                    last_name: data.last_name || "No'malum",   
+                    first_name: data.first_name || "No'malum",
+                    last_name: data.last_name || "No'malum",
                     phone: data.phone,
                     teacher: data.teacher,
                     note: data.note || "No'malum",
@@ -81,6 +118,19 @@ export const ApiClient = createApi({
                 },
             }),
         }),
+
+        createStudent: builder.mutation({
+            query: (studentData) => ({
+                url: "/api/v1/student/create/",
+                method: "POST",
+                body: studentData,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }),
+        }),
+
+
     }),
 });
 
@@ -92,5 +142,14 @@ export const {
     useLeadCreateMutation,
     useGetSubjectQuery,
     useGetTeacherQuery,
-    useUpdateLeadMutation
+    useUpdateLeadMutation,
+    useGetClientListQuery,
+    useCreateStudentMutation,
+    useGetSubjectsQuery,
+    useGetBranchesQuery,
+    useGetCourseLevelsQuery,
+    useGetEmployeesQuery,
+    useGetStartTimesQuery,
+    useGetGroupsQuery,
+    useGetClientByIdQuery
 } = ApiClient;

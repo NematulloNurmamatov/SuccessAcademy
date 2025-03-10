@@ -23,3 +23,16 @@
 .anticon {
     color: black !important;
 }
+
+.ant-form-item-label label{
+    /* background: rgb(239, 239, 239) !important; */
+    /* border: 1px solid rgb(199, 199, 199) !important; */
+    /* border-radius: 4px !important; */
+    color: #334D6E !important;
+    font-size: 10px !important;
+}
+
+.ant-form-item label {
+    /* color: #334D6E !important; */
+    size: 10px !important;
+}

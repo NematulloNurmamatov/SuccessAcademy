@@ -11,6 +11,8 @@ import ErrorPage from "./Error/ErrorPage";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import Leads from "./pages/Leads";
+import Clients from "./pages/Clients";
+import ClientsDetails from "./pages/ClientsDetails";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -23,6 +25,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="profile" element={<Profile />} />
               <Route path="leads" element={<Leads />} />
+              <Route path="clients" element={<Clients />} />
+              <Route path="clients-deteils/:id" element={<ClientsDetails />} />
+
               <Route path="*" element={<ErrorPage />} />
             </Route>
           </Route>

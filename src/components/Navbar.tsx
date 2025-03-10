@@ -1,34 +1,36 @@
 import { Layout, Avatar, Dropdown, MenuProps, message, Input } from "antd";
-import { FaBell, FaSearch } from "react-icons/fa";
+import { FaBell, FaSearch, FaExpandAlt, FaCompressAlt } from "react-icons/fa";
 import img from "../assets/Layer_40_copy.png";
 import { useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../store/store";
 import { useGetUserQuery } from "../services/Service";
 import { ThreeDot } from "react-loading-indicators";
 import { SearchOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 const { Header } = Layout;
 
 export default function Navbar() {
     const navigate = useNavigate();
-    // const auth = useSelector((state: RootState) => state); // ✅ Redux-dan state olish
-    // console.log(auth);
-
     const { data, isLoading } = useGetUserQuery({});
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     const handleLogout = async () => {
         try {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-            localStorage.removeItem("refresh_token");
-            localStorage.removeItem("user_id");
-            localStorage.removeItem("user_role");
-
+            localStorage.clear();
             message.success("You have logged out successfully!");
             navigate("/login");
         } catch (error) {
             message.error("Logout failed. Please try again later.");
+        }
+    };
+
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+            setIsFullscreen(true);
+        } else {
+            document.exitFullscreen();
+            setIsFullscreen(false);
         }
     };
 
@@ -46,10 +48,7 @@ export default function Navbar() {
                 </div>
 
                 <div className="relative w-72">
-                    {/* Search ikonkasi */}
                     <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-
-                    {/* Input */}
                     <Input
                         placeholder="Search..."
                         allowClear
@@ -60,7 +59,12 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-4">
+                    <button onClick={toggleFullscreen} className="text-xl text-gray-600 hover:text-blue-500">
+                        {isFullscreen ? <FaCompressAlt /> : <FaExpandAlt />}
+                    </button>
+
                     <FaBell className="text-xl cursor-pointer text-gray-600 hover:text-blue-500" />
+
                     {isLoading ? (
                         <span><ThreeDot color="#4e31cc" size="small" text="" textColor="" /> </span>
                     ) : (

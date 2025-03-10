@@ -27,9 +27,9 @@ export default function SidebarLayout({ children }: SidebarProps) {
                 collapsed={collapsed}
                 onCollapse={setCollapsed}
                 width={250}
-                className="h-screen !bg-white"
+                className="!bg-white h-screen overflow-hidden" 
             >
-                <div className={`h-[60px] flex items-center gap-3 px-4 transition-all ${collapsed ? "justify-center" : ""}`}>
+                <div className={`mt-6 flex items-center gap-3 px-4 transition-all ${collapsed ? "justify-center" : ""}`}>
                     <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
                         <FaBuilding className="text-white" />
                     </div>
@@ -50,7 +50,6 @@ export default function SidebarLayout({ children }: SidebarProps) {
                         </div>
                     )}
                 </div>
-
 
                 {isMainBranchOpen && (
                     <div className="px-4 py-3 bg-gray-100 rounded-md mt-3">
@@ -74,9 +73,11 @@ export default function SidebarLayout({ children }: SidebarProps) {
                 />
             </Sider>
 
-            <Layout className="flex-1 overflow-y-auto">
-                <Content className="p-6 bg-gray-100 min-h-screen">{children}</Content>
+            <Layout className="flex-1 h-screen">
+                <Content className="p-6 bg-gray-100 h-screen overflow-y-auto">{children}</Content>
             </Layout>
         </Layout>
+
+
     );
 }
