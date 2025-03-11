@@ -264,8 +264,6 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ visible, onClose, onS
                             </Form.Item>
 
 
-
-
                             <Form.Item className="col-span-2" label="Select type of lesson" name="group_type">
                                 <Radio.Group value={lessonType} onChange={(e) => setLessonType(e.target.value)} className="!flex w-full justify-between gap-4">
                                     <Radio value="individual">Individual lesson</Radio>
